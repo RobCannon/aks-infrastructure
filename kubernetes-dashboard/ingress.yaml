@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - test.platform-services.warnermedia-systems.com
+      secretName: kubernetes-dashboard-certs
+  rules:
+    - host: test.platform-services.warnermedia-systems.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kubernetes-dashboard
+              servicePort: 443
